@@ -1245,6 +1245,29 @@
         "build": {
           "buildTransitive/net8.0/_._": {}
         }
+      },
+      "Library.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Library.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Library.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Library.Application.dll": {}
+        }
+      },
+      "Library.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/Library.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Library.Domain.dll": {}
+        }
       }
     }
   },
@@ -3649,10 +3672,21 @@
         "system.security.cryptography.protecteddata.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Library.Application/1.0.0": {
+      "type": "project",
+      "path": "../Library.Application/Library.Application.csproj",
+      "msbuildProject": "../Library.Application/Library.Application.csproj"
+    },
+    "Library.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Library.Domain/Library.Domain.csproj",
+      "msbuildProject": "../Library.Domain/Library.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "Library.Application >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 10.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 10.0.5",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.5"
@@ -3689,7 +3723,11 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\shiha_a8q6i0r\\Desktop\\Library project\\Library.Application\\Library.Application.csproj": {
+              "projectPath": "C:\\Users\\shiha_a8q6i0r\\Desktop\\Library project\\Library.Application\\Library.Application.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
