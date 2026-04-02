@@ -15,20 +15,24 @@ namespace Library.Domain.Entities
 
         public Address? Address { get; private set; }
         public Email? Email { get; set; }
-        public ICollection<PhoneNumber> PhoneNumbers {  get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; } = new List<PhoneNumber>();
 
         public void UpdateAddress(Address address)
         {
             Address = address;
         }
-
-        public Person(string firstName, string lastName, char gender, Address? address)
+        public void UpdateEmail(Email email)
         {
+            Email = email;
+        }
 
+        public Person(string firstName, string lastName, char gender, Address? address, Email? email)
+        {
             FirstName = firstName;
             LastName = lastName;
             Gender = gender;
             Address = address;
+            Email = email;
         }
 
         public Person(Address address)
