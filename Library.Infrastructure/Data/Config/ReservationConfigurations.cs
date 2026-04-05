@@ -15,6 +15,7 @@ namespace Library.Infrastructure.Data.Config
             builder.HasKey(r=>r.Id);
             builder.Property(r => r.Id).ValueGeneratedOnAdd();
             builder.Property(r => r.IsCanceled).HasColumnType("BIT").HasDefaultValue(false).IsRequired(true);
+            builder.Property(r => r.IsCompleted).HasColumnType("BIT").HasDefaultValue(false).IsRequired(true);
             builder.Property(r => r.ReservationDate).HasColumnType("datetime2").IsRequired(true);
 
             builder.HasOne(r => r.User).WithMany(u => u.Reservations).HasForeignKey(r => r.UserId).IsRequired(true);

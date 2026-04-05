@@ -37,7 +37,7 @@ namespace Library.Infrastructure.Data.Config
             });
 
             builder.HasOne(b => b.User).WithMany(u => u.BorrowingRecords).HasForeignKey(b => b.UserId).OnDelete(DeleteBehavior.Restrict);
-            builder.HasOne(b => b.BookCopy).WithMany(bc => bc.BorrowingRecords).HasForeignKey(b => b.BookCopyId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(b => b.BookCopy).WithMany(bc => bc.BorrowingRecords).HasForeignKey(b => b.BookCopyId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

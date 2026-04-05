@@ -233,6 +233,11 @@ namespace Library.Infrastructure.Migrations
                         .HasColumnType("BIT")
                         .HasDefaultValue(false);
 
+                    b.Property<bool>("IsCompleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIT")
+                        .HasDefaultValue(false);
+
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("datetime2");
 
@@ -351,7 +356,7 @@ namespace Library.Infrastructure.Migrations
                     b.HasOne("Library.Domain.Entities.BookCopy", "BookCopy")
                         .WithMany("BorrowingRecords")
                         .HasForeignKey("BookCopyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Library.Domain.Entities.User", "User")

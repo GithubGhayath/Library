@@ -11,6 +11,8 @@ namespace Library.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
         public DbSet<Person> People { get; set; }
         public DbSet<PhoneNumber> PhoneNumbers { get; set; }
         public DbSet<User> Users { get; set; }
@@ -21,14 +23,6 @@ namespace Library.Infrastructure.Data
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<BorrowingRecord> BorrowingRecords { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-
-            optionsBuilder.UseSqlServer(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("constr").Value!);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

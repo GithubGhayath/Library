@@ -991,7 +991,8 @@
       },
       "Library.Application/1.0.0": {
         "dependencies": {
-          "Library.Domain": "1.0.0"
+          "Library.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "10.0.5"
         },
         "runtime": {
           "Library.Application.dll": {

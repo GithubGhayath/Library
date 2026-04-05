@@ -10,6 +10,7 @@ namespace Library.Domain.Entities
         public int UserId { get; set; }
         public int BookCopyId { get; set; }
         public bool IsCanceled { get; set; }
+        public bool IsCompleted { get; set; }
         public DateTime ReservationDate {  get; set; }
 
 

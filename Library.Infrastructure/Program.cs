@@ -14,14 +14,14 @@ namespace Library.Infrastructure
     {
         public static void Main(string[] args)
         {
-            using (var context = new AppDbContext())
-            {
+            // using (var context = new AppDbContext())
+            // {
 
                 /*
                 Address address = new Address("Damascus", "Al-Mazzeh", "Street 111");
                 Email email = new Email("Maya@gmail.com");
 
-
+                
                 Person person = new Person("Maya", "Alali", 'F', address, email);
                 person.AuditTimestamp!.CreateAt = DateTime.Now;
                 person.AuditTimestamp!.UpdateAt = null;
@@ -215,7 +215,7 @@ namespace Library.Infrastructure
                 context.SaveChanges();
                 Console.WriteLine("Done...");
                */
-            }
+           // }
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Library.Domain.Entities
 {
-    public class Book
+    public class Book 
     {
         public int Id { get; set; }
         public string Titile { get; set; }
