@@ -127,6 +127,10 @@ namespace Library.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasMaxLength(50)
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
 

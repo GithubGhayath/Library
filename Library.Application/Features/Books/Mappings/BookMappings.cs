@@ -8,6 +8,33 @@ namespace Library.Application.Features.Books.Mappings
 {
     public static class BookMappings
     {
+        public static FullDetailsBookDto ToDetailsDto(this Book book)
+        {
+            return new FullDetailsBookDto
+            {
+                Titile = book.Titile,
+                ISBN = book.ISBN,
+                PublicationDate = book.PublicationDate,
+                Genre = book.Genre,
+                NumberOfCopies = book.BookCopies.Count,
+                AdditionalDetails = book.AdditionalDetails,
+                CreateAt = book.AuditTimestamps!.CreateAt,
+                UpdateAt = book.AuditTimestamps.UpdateAt,
+                
+            };
+        }
+
+        public static BookDto ToDto(this Book book)
+        {
+            return new BookDto
+            {
+                Titile = book.Titile,
+                ISBN = book.ISBN,
+                PublicationDate = book.PublicationDate,
+                Genre = book.Genre,
+                NumberOfCopies = book.BookCopies.Count
+            };
+        }
         public static Book ToEntity(this CreateBookDto createBookDto)
         {
             return new Book(

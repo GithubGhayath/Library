@@ -19,7 +19,7 @@ namespace Library.Infrastructure.Reopsitories.Common
         }   
 
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             _Set.Add(entity);   
         }
@@ -29,37 +29,29 @@ namespace Library.Infrastructure.Reopsitories.Common
             _Set.AddRange(entities);
         }
 
-        public T? Get(Expression<Func<T, bool>> Filter, string[]? includeProperties = null)
+        public T? Get(Expression<Func<T, bool>> Filter, Func<IQueryable<T>, IQueryable<T>>? include = null)
         {
 
             IQueryable<T> Query = _Set;
 
             Query = Query.Where(Filter);
 
-            if (includeProperties is not null && includeProperties.Count() > 0)
-            {
-                foreach (string property in includeProperties)
-                {
-                    Query = Query.Include(property);
-                }
-            }
+            if (include != null)
+                Query = include(Query);
+
             return Query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? Filter, string[]? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? Filter,  Func<IQueryable<T>, IQueryable<T>>? include = null)
         {
             IQueryable<T> Query = _Set;
 
             if (Filter is not null)
                 Query = Query.Where(Filter);
 
-            if (includeProperties is not null && includeProperties.Count() > 0)
-            {
-                foreach(string property in includeProperties)
-                {
-                    Query = Query.Include(property);
-                }
-            }
+
+            if(include != null)
+                Query = include(Query);
 
             return Query.ToList();
         }

@@ -12,6 +12,7 @@ namespace Library.Domain.Entities
         public int NumberOfLateDays { get; set; }
         public decimal FineAmount { get; set; }
         public bool PaymentStatus { get; set; }
+        public DateTime? PaymentDate {  get; set; }
         
         public PaymentMethod PaymentMethod { get; set; }
         public BorrowingRecord BorrowingRecord { get; set; }
@@ -22,6 +23,7 @@ namespace Library.Domain.Entities
             NumberOfLateDays = numberOfLateDays;
             FineAmount = fineAmount;
             PaymentStatus = paymentStatus;
+            PaymentDate = DateTime.Now;
         }
     }
 }

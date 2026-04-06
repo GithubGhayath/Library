@@ -4,6 +4,7 @@ using Library.Application.Reopsitories.Common;
 using Library.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.API.Controllers
 {
@@ -23,7 +24,8 @@ namespace Library.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetBookList()
         {
-            var BookList = _UnitOfWork.BookRepository.GetAll();
+
+            var BookList = _UnitOfWork.BookRepository.GetAll(include: q => q.Include(b => b.BookCopies)).Select(b => b.ToDto());
 
             if (BookList.Count() == 0)
                 return NotFound();
@@ -35,15 +37,27 @@ namespace Library.API.Controllers
         [HttpGet("{id}", Name = "GetBookById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetBook(int id)
+        public IActionResult GetBookById(int id)
         {
-            var Book = _UnitOfWork.BookRepository.Get(b => b.Id == id);
+            var Book = _UnitOfWork.BookRepository.Get(b => b.Id == id,include:query=>query.Include(b=>b.BookCopies));
 
             if (Book == null)
                 return NotFound();
 
-            return Ok(Book);
+            return Ok(Book.ToDetailsDto());
         }
+
+        [HttpGet("Search",Name ="GetBookByName")]
+        public IActionResult GetBookByName(string BookName)
+        {
+            var Book = _UnitOfWork.BookRepository.Get(b => b.Titile == BookName, include: query => query.Include(b => b.BookCopies));
+
+            if (Book == null)
+                return NotFound();
+
+            return Ok(Book.ToDto());
+        }
+
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -97,7 +111,7 @@ namespace Library.API.Controllers
                 _UnitOfWork.BookRepository.Update(BookDto, id);
 
 
-                int OldNumberOfCopies = _UnitOfWork.BookCopyRepository.GetAll(bc => bc.BookId == id).ToList().Count;
+                int OldNumberOfCopies = _UnitOfWork.BookCopyRepository.GetAll(Filter: bc => bc.BookId == id).ToList().Count;
                 int NewNumberOfCopies = BookDto.NumberOfCopies;
 
 

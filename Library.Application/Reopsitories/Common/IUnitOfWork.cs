@@ -9,7 +9,8 @@ namespace Library.Application.Reopsitories.Common
     {
         IBookRepository BookRepository { get; }
         IBookCopyRepository BookCopyRepository { get; }
-
+        IFinesRepository FinesRepository { get; }
+        IReservationRepository ReservationRepository {  get; }
         IDbContextTransaction BeginTransaction();
 
         int Save();

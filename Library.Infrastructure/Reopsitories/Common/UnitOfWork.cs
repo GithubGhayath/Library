@@ -17,11 +17,17 @@ namespace Library.Infrastructure.Reopsitories.Common
             _Context = context;
             BookRepository = new BookRepository(_Context);
             BookCopyRepository = new BookCopyRepository(_Context);
+            ReservationRepository= new ReservationRepository(_Context);
+            FinesRepository= new FinesRepository(_Context);
         }
 
         public IBookRepository BookRepository { get; }
 
         public IBookCopyRepository BookCopyRepository { get; }
+
+        public IReservationRepository ReservationRepository { get; }
+
+        public IFinesRepository FinesRepository { get; }
 
         public IDbContextTransaction BeginTransaction()
         {
