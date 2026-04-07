@@ -19,6 +19,8 @@ namespace Library.Infrastructure.Reopsitories.Common
             BookCopyRepository = new BookCopyRepository(_Context);
             ReservationRepository= new ReservationRepository(_Context);
             FinesRepository= new FinesRepository(_Context);
+            BorrowingRecordRepository = new BorrowingRecordRepository(_Context);
+            PhoneNumberRepository = new PhoneNumberRepository(_Context);
         }
 
         public IBookRepository BookRepository { get; }
@@ -29,6 +31,9 @@ namespace Library.Infrastructure.Reopsitories.Common
 
         public IFinesRepository FinesRepository { get; }
 
+        public IBorrowingRecordRepository BorrowingRecordRepository { get; }
+
+        public IPhoneNumberRepository PhoneNumberRepository {  get; }
         public IDbContextTransaction BeginTransaction()
         {
             return _Context.Database.BeginTransaction();
