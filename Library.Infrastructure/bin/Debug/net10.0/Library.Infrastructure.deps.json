@@ -991,6 +991,7 @@
       },
       "Library.Application/1.0.0": {
         "dependencies": {
+          "BCrypt.Net-Next": "4.1.0",
           "Library.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore": "10.0.5"
         },

@@ -13,6 +13,8 @@ namespace Library.Application.Reopsitories.Common
         IReservationRepository ReservationRepository {  get; }
         IBorrowingRecordRepository BorrowingRecordRepository { get; }
         IPhoneNumberRepository PhoneNumberRepository { get; }
+        IUserRepository UserRepository { get; }
+        IPersonRepository PersonRepository { get; }
         IDbContextTransaction BeginTransaction();
 
         int Save();

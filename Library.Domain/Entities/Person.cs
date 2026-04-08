@@ -9,7 +9,7 @@ namespace Library.Domain.Entities
     public class Person
     {
         public int Id { get; set; }
-        public  string FirstName { get; set; }
+        public  string FirstName { get; set; } 
         public  string LastName { get; set; }
         public char Gender { get; set; }
 
@@ -35,7 +35,12 @@ namespace Library.Domain.Entities
             Gender = gender;
             Address = address;
             Email = email;
-            AuditTimestamp = new AuditTimestamp();
+            if (email != null)
+                Email = email;
+            if(address != null)
+                Address = address;
+
+            AuditTimestamp = new AuditTimestamp(DateTime.Now, null);
         }
 
         public Person(Address address, Email email)
