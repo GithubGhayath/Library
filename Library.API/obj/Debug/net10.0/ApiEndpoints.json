@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Library.API.Controllers.Auth.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Library.Application.Features.Auth.Dtos.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Library.API.Controllers.BookController",
     "Method": "GetBookList",
     "RelativePath": "api/Books",

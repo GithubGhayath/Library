@@ -1,10 +1,10 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
   <diagram name="Page-1" id="dJZqfwKY2L23D5TlUH1H">
-    <mxGraphModel dx="1892" dy="1822" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2587" dy="2303" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="fgl7KYPTQ_P29LEn1_VF-5" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=0;strokeColor=#2D7600;fontSize=16;fillColor=#60a917;fontColor=#ffffff;" value="Users" vertex="1">
+        <mxCell id="fgl7KYPTQ_P29LEn1_VF-5" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=0;strokeColor=#3700CC;fontSize=16;fillColor=#6a00ff;fontColor=#ffffff;" value="Users" vertex="1">
           <mxGeometry height="270" width="270" x="-170" y="10" as="geometry" />
         </mxCell>
         <mxCell id="fgl7KYPTQ_P29LEn1_VF-6" parent="fgl7KYPTQ_P29LEn1_VF-5" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;strokeColor=inherit;fontSize=16;" value="" vertex="1">
@@ -601,7 +601,7 @@
         <mxCell id="fgl7KYPTQ_P29LEn1_VF-133" edge="1" parent="1" source="fgl7KYPTQ_P29LEn1_VF-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=ERmandOne;endFill=0;startArrow=ERzeroToMany;startFill=0;" target="fgl7KYPTQ_P29LEn1_VF-124">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="fgl7KYPTQ_P29LEn1_VF-134" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=0;fontSize=16;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" value="People" vertex="1">
+        <mxCell id="fgl7KYPTQ_P29LEn1_VF-134" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=0;fontSize=16;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" value="People" vertex="1">
           <mxGeometry height="240" width="180" x="360" y="-390" as="geometry" />
         </mxCell>
         <mxCell id="fgl7KYPTQ_P29LEn1_VF-135" parent="fgl7KYPTQ_P29LEn1_VF-134" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=16;" value="" vertex="1">
@@ -751,7 +751,7 @@
         <mxCell id="DRf90II6ND6Ex7FiSW-M-7" edge="1" parent="1" source="fgl7KYPTQ_P29LEn1_VF-95" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=ERmandOne;endFill=0;startArrow=ERzeroToMany;startFill=0;" target="fgl7KYPTQ_P29LEn1_VF-79">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="UldlkIEgUm8gaQ7NNnJB-1" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=0;strokeColor=#2D7600;fontSize=16;fillColor=#60a917;fontColor=#ffffff;" value="Settings" vertex="1">
+        <mxCell id="UldlkIEgUm8gaQ7NNnJB-1" parent="1" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=0;strokeColor=#001DBC;fontSize=16;fillColor=#0050ef;fontColor=#ffffff;" value="Settings" vertex="1">
           <mxGeometry height="170" width="279.99999999999955" x="920" y="710" as="geometry" />
         </mxCell>
         <mxCell id="UldlkIEgUm8gaQ7NNnJB-2" parent="UldlkIEgUm8gaQ7NNnJB-1" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;strokeColor=inherit;fontSize=16;" value="" vertex="1">
