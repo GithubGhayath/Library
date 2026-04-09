@@ -2,12 +2,14 @@
 using Library.Application.Features.Books.Mappings;
 using Library.Application.Reopsitories.Common;
 using Library.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.API.Controllers
 {
+    [Authorize]
     [Route("api/Books")]   // Rout: https://localhost:7170/api/Books
     [ApiController]
     public class BookController : ControllerBase
@@ -22,6 +24,7 @@ namespace Library.API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult GetBookList()
         {
 

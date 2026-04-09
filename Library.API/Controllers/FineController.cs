@@ -1,11 +1,13 @@
 ﻿using Library.Application.Features.Fines.Mappings;
 using Library.Application.Reopsitories.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.API.Controllers
 {
+    [Authorize]
     [Route("api/Fines")]    // Rout: https://localhost:7170/api/Fines
     [ApiController]
     public class FineController : ControllerBase

@@ -1,12 +1,14 @@
 ﻿using Library.Application.Features.Users.Dtos;
 using Library.Application.Features.Users.Mappings;
 using Library.Application.Reopsitories.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.API.Controllers
 {
+    [Authorize]
     [Route("api/Users")]     // Rout: https://localhost:7170/api/Users
     [ApiController]
     public class UserController : ControllerBase

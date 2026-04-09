@@ -3,6 +3,7 @@ using Library.Application.Features.BorrowingRecord.Dtos;
 using Library.Application.Features.BorrowingRecord.Mappings;
 using Library.Application.Reopsitories.Common;
 using Library.Domain.ValueObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Library.API.Controllers
 {
+    [Authorize]
     [Route("api/BorrowingRecords")] // Rout: https://localhost:7170/api/BorrowingRecords
     [ApiController]
     public class BorrowingRecordController : ControllerBase

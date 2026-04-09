@@ -1,11 +1,13 @@
 ﻿using Library.Application.Features.PhoneNumber.Dtos;
 using Library.Application.Features.PhoneNumber.Mappings;
 using Library.Application.Reopsitories.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.API.Controllers
 {
+    [Authorize]
     [Route("api/PhoneNumber")]  // Rout: https://localhost:7170/api/PhoneNumber
     [ApiController]
     public class PhoneNumberController : ControllerBase

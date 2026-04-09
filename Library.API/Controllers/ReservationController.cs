@@ -1,12 +1,13 @@
 ﻿using Library.Application.Features.Reservations.Dtos;
 using Library.Application.Features.Reservations.Mappings;
 using Library.Application.Reopsitories.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.API.Controllers
 {
-
+    [Authorize]
     [Route("api/Reservations")] // Rout: https://localhost:7170/api/Reservations
     [ApiController]
     public class ReservationController : ControllerBase

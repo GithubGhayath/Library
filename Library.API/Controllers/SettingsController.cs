@@ -1,10 +1,12 @@
 ﻿using Library.Application.Features.Settings.Dtos;
 using Library.Application.Reopsitories.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
+    [Authorize]
     [Route("api/Settings")]  // Rout: https://localhost:7170/api/Settings
     [ApiController]
     public class SettingsController : ControllerBase
