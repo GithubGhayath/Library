@@ -17,6 +17,23 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
+// Adding CORS policy to allow requests from the specified origins
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("LibraryApiCorsPolicy", policy =>
+    {
+        policy
+            .WithOrigins(
+                "https://localhost:7217",
+                "http://localhost:5215"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+
+
 
 var app = builder.Build();
 
@@ -27,6 +44,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("LibraryApiCorsPolicy");
 
 app.MapControllers();
 
