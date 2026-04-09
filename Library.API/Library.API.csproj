@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Library.Infrastructure\Library.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Auth\" />
+  </ItemGroup>
+
 </Project>
