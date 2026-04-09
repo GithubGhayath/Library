@@ -23,6 +23,7 @@ namespace Library.Infrastructure.Reopsitories.Common
             PhoneNumberRepository = new PhoneNumberRepository(_Context);
             UserRepository = new UserRepository(_Context);  
             PersonRepository = new PersonRepository(_Context);
+            SettingsRepository = new SettingsRespository(_Context); 
         }
 
         public IBookRepository BookRepository { get; }
@@ -40,6 +41,8 @@ namespace Library.Infrastructure.Reopsitories.Common
         public IUserRepository UserRepository { get; }
 
         public IPersonRepository PersonRepository { get; }
+
+        public ISettingsRepository SettingsRepository { get; }
 
         public IDbContextTransaction BeginTransaction()
         {

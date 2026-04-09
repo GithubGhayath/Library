@@ -15,6 +15,7 @@ namespace Library.Application.Reopsitories.Common
         IPhoneNumberRepository PhoneNumberRepository { get; }
         IUserRepository UserRepository { get; }
         IPersonRepository PersonRepository { get; }
+        ISettingsRepository SettingsRepository { get; }
         IDbContextTransaction BeginTransaction();
 
         int Save();
