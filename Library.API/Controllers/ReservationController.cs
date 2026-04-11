@@ -1,4 +1,5 @@
-﻿using Library.Application.Features.Reservations.Dtos;
+﻿using Library.Application.Common.Constants;
+using Library.Application.Features.Reservations.Dtos;
 using Library.Application.Features.Reservations.Mappings;
 using Library.Application.Reopsitories.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -12,12 +13,13 @@ namespace Library.API.Controllers
     [ApiController]
     public class ReservationController : ControllerBase
     {
-        private readonly IUnitOfWork _IUnityOfWork;
+        private readonly IUnitOfWork _IUnityOfWork; 
         public ReservationController(IUnitOfWork IUnityOfWork)
         {
             _IUnityOfWork = IUnityOfWork;
         }
         [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetAllReservations()
@@ -35,6 +37,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id}/Cancel")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -61,6 +64,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id}/Complete")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,6 +89,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CreateReservation(CreateReservationDto createReservationDto)
@@ -111,6 +116,7 @@ namespace Library.API.Controllers
             }
         }
         [HttpGet("{id}", Name = "GetRerervationById")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

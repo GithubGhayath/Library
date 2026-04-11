@@ -1,4 +1,5 @@
-﻿using Library.Application.Features.Users.Dtos;
+﻿using Library.Application.Common.Constants;
+using Library.Application.Features.Users.Dtos;
 using Library.Application.Features.Users.Mappings;
 using Library.Application.Reopsitories.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +13,7 @@ namespace Library.API.Controllers
     [Route("api/Users")]     // Rout: https://localhost:7170/api/Users
     [ApiController]
     public class UserController : ControllerBase
-    {
+    { 
         private readonly IUnitOfWork _IUnitOfWork;
         public UserController(IUnitOfWork IUnitOfWork)
         {
@@ -20,6 +21,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetUserList()
@@ -33,6 +35,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("Summary/{id}")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -49,6 +52,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("Details/{id}",Name = "GetDetailsUserById")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -69,6 +73,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -106,6 +111,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -123,6 +129,7 @@ namespace Library.API.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

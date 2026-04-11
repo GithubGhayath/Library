@@ -1,4 +1,5 @@
-﻿using Library.Application.Features.Books.Dtos;
+﻿using Library.Application.Common.Constants;
+using Library.Application.Features.Books.Dtos;
 using Library.Application.Features.BorrowingRecord.Dtos;
 using Library.Application.Features.BorrowingRecord.Mappings;
 using Library.Application.Reopsitories.Common;
@@ -12,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 namespace Library.API.Controllers
 {
     [Authorize]
-    [Route("api/BorrowingRecords")] // Rout: https://localhost:7170/api/BorrowingRecords
+    [Route("api/BorrowingRecords")] // Rout: https://localhost:7170/api/BorrowingRecords 
     [ApiController]
     public class BorrowingRecordController : ControllerBase
     {
@@ -25,6 +26,7 @@ namespace Library.API.Controllers
 
 
         [HttpGet("{id}", Name = "GetBorrowingRecordByID")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetBorrowingRecord(int id) 
@@ -42,6 +44,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -78,6 +81,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id}/{NumberOfDaysToIncrease}")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

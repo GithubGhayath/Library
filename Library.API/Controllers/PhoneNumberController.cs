@@ -1,4 +1,5 @@
-﻿using Library.Application.Features.PhoneNumber.Dtos;
+﻿using Library.Application.Common.Constants;
+using Library.Application.Features.PhoneNumber.Dtos;
 using Library.Application.Features.PhoneNumber.Mappings;
 using Library.Application.Reopsitories.Common;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,7 @@ namespace Library.API.Controllers
     [Route("api/PhoneNumber")]  // Rout: https://localhost:7170/api/PhoneNumber
     [ApiController]
     public class PhoneNumberController : ControllerBase
-    {
+    { 
         private readonly IUnitOfWork _IUnitOfWork;
         public PhoneNumberController(IUnitOfWork unitOfWork)
         {
@@ -19,6 +20,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("{personId}/Person")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -37,6 +39,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("{id}",Name ="GetPhoneNumberById")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -54,6 +57,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CreatePhoneNumber(CreatePhoneNumberDto phoneNumber)
@@ -68,6 +72,7 @@ namespace Library.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -88,6 +93,7 @@ namespace Library.API.Controllers
         }
 
        
+
 
 
     }

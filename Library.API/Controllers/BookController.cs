@@ -1,4 +1,5 @@
-﻿using Library.Application.Features.Books.Dtos;
+﻿using Library.Application.Common.Constants;
+using Library.Application.Features.Books.Dtos;
 using Library.Application.Features.Books.Mappings;
 using Library.Application.Reopsitories.Common;
 using Library.Domain.Entities;
@@ -12,7 +13,7 @@ namespace Library.API.Controllers
     [Authorize]
     [Route("api/Books")]   // Rout: https://localhost:7170/api/Books
     [ApiController]
-    public class BookController : ControllerBase
+    public class BookController : ControllerBase 
     {
         private readonly IUnitOfWork _UnitOfWork;
 
@@ -22,6 +23,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -38,6 +40,7 @@ namespace Library.API.Controllers
 
 
         [HttpGet("{id}", Name = "GetBookById")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetBookById(int id)
@@ -51,6 +54,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("Search",Name ="GetBookByName")]
+        [AllowAnonymous]
         public IActionResult GetBookByName(string BookName)
         {
             var Book = _UnitOfWork.BookRepository.Get(b => b.Titile == BookName, include: query => query.Include(b => b.BookCopies));
@@ -63,6 +67,7 @@ namespace Library.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles =Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult AddNewBook(CreateBookDto book)
@@ -96,6 +101,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles =Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -142,6 +148,7 @@ namespace Library.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles =Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

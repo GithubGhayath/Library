@@ -1,4 +1,5 @@
-﻿using Library.Application.Features.Fines.Mappings;
+﻿using Library.Application.Common.Constants;
+using Library.Application.Features.Fines.Mappings;
 using Library.Application.Reopsitories.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,7 @@ namespace Library.API.Controllers
     [Route("api/Fines")]    // Rout: https://localhost:7170/api/Fines
     [ApiController]
     public class FineController : ControllerBase
-    {
+    { 
         private readonly IUnitOfWork _IUnitOfWork;
         public FineController(IUnitOfWork IUnitOfWork)
         {
@@ -21,6 +22,7 @@ namespace Library.API.Controllers
         
 
         [HttpGet]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetFineList()
@@ -43,6 +45,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetFineById")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetFine(int id)
@@ -64,6 +67,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("Users/{UserId}/Report")]
+        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetReport(int UserId) 
