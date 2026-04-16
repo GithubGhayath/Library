@@ -1,4 +1,5 @@
-﻿using Library.Application.Common.Constants;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Library.Application.Common.Constants;
 using Library.Application.Features.PhoneNumber.Dtos;
 using Library.Application.Features.PhoneNumber.Mappings;
 using Library.Application.Reopsitories.Common;
@@ -16,7 +17,7 @@ namespace Library.API.Controllers
         private readonly IUnitOfWork _IUnitOfWork;
         public PhoneNumberController(IUnitOfWork unitOfWork)
         {
-            _IUnitOfWork = unitOfWork;
+            _IUnitOfWork = unitOfWork; 
         }
 
         [HttpGet("{personId}/Person")]
@@ -60,8 +61,17 @@ namespace Library.API.Controllers
         [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CreatePhoneNumber(CreatePhoneNumberDto phoneNumber)
+        public async Task<IActionResult> CreatePhoneNumberAsync(CreatePhoneNumberDto phoneNumber, [FromServices] IAuthorizationService authorizationService)
         {
+
+            var CurrentUser = _IUnitOfWork.UserRepository.Get(u=>u.PersonId == phoneNumber.PersonId,include:query => query.Include(u => u.Person));
+
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User, CurrentUser!.Id, policyName: "ClientOwnerOrAdmin");
+
+            if (!authResult.Succeeded)
+                return Forbid(); // 403 
+
             if (phoneNumber == null) 
                 return BadRequest("Invalid info");
 

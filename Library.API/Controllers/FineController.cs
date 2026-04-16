@@ -22,7 +22,7 @@ namespace Library.API.Controllers
         
 
         [HttpGet]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.Admin)] 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetFineList()
@@ -48,8 +48,17 @@ namespace Library.API.Controllers
         [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetFine(int id)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> GetFineAsync(int id, [FromServices] IAuthorizationService authorizationService)
         {
+
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User, id, policyName: "ClientOwnerOrAdmin");
+
+            if (!authResult.Succeeded)
+                return Forbid(); // 403
+
+
             var Fine = _IUnitOfWork.FinesRepository.Get(f => f.Id == id, include: query => query.Include(f => f.PaymentMethod)
                                                                                     .Include(f => f.BorrowingRecord)
                                                                                         .ThenInclude(br => br.User)
@@ -58,7 +67,8 @@ namespace Library.API.Controllers
                                                                                         .ThenInclude(br => br.BookCopy)
                                                                                             .ThenInclude(bc => bc.Book));
 
-            if(Fine == null)
+
+            if (Fine == null)
             {
                 return NotFound($"No Fine Found With Id: {id}");
             }
@@ -67,11 +77,19 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("Users/{UserId}/Report")]
-        [Authorize(Roles = Roles.Admin)]
+     
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetReport(int UserId) 
+        public async Task<IActionResult> GetReportAsync(int UserId, [FromServices] IAuthorizationService authorizationService) 
         {
+
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User, UserId, policyName: "ClientOwnerOrAdmin");
+
+            if (!authResult.Succeeded)
+                return Forbid(); // 403
+
+
             var UserFinesReport = _IUnitOfWork.FinesRepository.GetAll(f=>f.BorrowingRecord.UserId == UserId,
                                                              include: query => query.Include(f => f.PaymentMethod)
                                                                                     .Include(f => f.BorrowingRecord)

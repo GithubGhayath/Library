@@ -15,7 +15,7 @@ namespace Library.API.Controllers
         private readonly IUnitOfWork _IUnitOfWork; 
         public SettingsController(IUnitOfWork unitOfWork)
         {
-            _IUnitOfWork = unitOfWork;
+            _IUnitOfWork = unitOfWork; 
         }
 
 

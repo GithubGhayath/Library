@@ -1,4 +1,5 @@
-﻿using Library.Application.Common.Constants;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Library.Application.Common.Constants;
 using Library.Application.Features.Books.Dtos;
 using Library.Application.Features.BorrowingRecord.Dtos;
 using Library.Application.Features.BorrowingRecord.Mappings;
@@ -15,7 +16,7 @@ namespace Library.API.Controllers
     [Authorize]
     [Route("api/BorrowingRecords")] // Rout: https://localhost:7170/api/BorrowingRecords 
     [ApiController]
-    public class BorrowingRecordController : ControllerBase
+    public class BorrowingRecordController : ControllerBase 
     {
         private readonly IUnitOfWork _IUniteOfWork;
         public BorrowingRecordController(IUnitOfWork unitOfWork)
@@ -48,8 +49,16 @@ namespace Library.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult BorroweBook(CreateBorrowingRecordDto borrowingRecordDto)
+        public async Task<IActionResult> BorroweBookAsync(CreateBorrowingRecordDto borrowingRecordDto, [FromServices] IAuthorizationService authorizationService)
         {
+
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User, borrowingRecordDto.UserId, policyName: "ClientOwnerOrAdmin");
+
+            if (!authResult.Succeeded)
+                return Forbid(); // 403
+
+
             var bookCopy = _IUniteOfWork.BookCopyRepository.Get(bc => bc.BookId == borrowingRecordDto.BookId && bc.IsAvailabile);
 
             if(bookCopy == null) 

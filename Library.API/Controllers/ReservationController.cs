@@ -1,4 +1,5 @@
-﻿using Library.Application.Common.Constants;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Library.Application.Common.Constants;
 using Library.Application.Features.Reservations.Dtos;
 using Library.Application.Features.Reservations.Mappings;
 using Library.Application.Reopsitories.Common;
@@ -15,7 +16,7 @@ namespace Library.API.Controllers
     {
         private readonly IUnitOfWork _IUnityOfWork; 
         public ReservationController(IUnitOfWork IUnityOfWork)
-        {
+        { 
             _IUnityOfWork = IUnityOfWork;
         }
         [HttpGet]
@@ -89,11 +90,18 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CreateReservation(CreateReservationDto createReservationDto)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> CreateReservationAsync(CreateReservationDto createReservationDto, [FromServices] IAuthorizationService authorizationService)
         {
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User, createReservationDto.UserId, policyName: "ClientOwnerOrAdmin");
+
+            if (!authResult.Succeeded)
+                return Forbid(); // 403
+
+
             if (createReservationDto == null)
                 return BadRequest("Reservation data is required.");
 

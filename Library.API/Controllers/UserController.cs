@@ -1,4 +1,5 @@
-﻿using Library.Application.Common.Constants;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Library.Application.Common.Constants;
 using Library.Application.Features.Users.Dtos;
 using Library.Application.Features.Users.Mappings;
 using Library.Application.Reopsitories.Common;
@@ -18,7 +19,7 @@ namespace Library.API.Controllers
         public UserController(IUnitOfWork IUnitOfWork)
         {
             _IUnitOfWork = IUnitOfWork;
-        }
+        } 
 
         [HttpGet]
         [Authorize(Roles = Roles.Admin)]
@@ -35,52 +36,72 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("Summary/{id}")]
-        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetSummaryUserById(int id)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> GetSummaryUserByIdAsync(int id, [FromServices] IAuthorizationService authorizationService)
         {
             if (id <= 0)
                 return BadRequest("Invalid user ID. ID must be a positive integer.");
 
-            var User = _IUnitOfWork.UserRepository.Get(u => u.Id == id, include: query => query.Include(u => u.Person));
 
-            if (User == null)
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User, id, policyName: "ClientOwnerOrAdmin");
+
+            if (!authResult.Succeeded)
+                return Forbid(); // 403
+
+
+            var user = _IUnitOfWork.UserRepository.Get(u => u.Id == id, include: query => query.Include(u => u.Person));
+
+            if (user == null)
                 return NotFound($"No user found with ID {id}.");
-            return Ok(User.ToUserSummaryDto());
+
+
+            return Ok(user.ToUserSummaryDto());
         }
 
         [HttpGet("Details/{id}",Name = "GetDetailsUserById")]
-        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetDetailsUserById(int id)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> GetDetailsUserByIdAsync(int id, [FromServices] IAuthorizationService authorizationService)
         {
             if(id<= 0)
                 return BadRequest("Invalid user ID. ID must be a positive integer.");
 
 
-            var User = _IUnitOfWork.UserRepository.Get(u => u.Id == id, include: query => query.Include(u => u.Person));
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User, id, policyName: "ClientOwnerOrAdmin");
 
-            if (User == null)
+            if (!authResult.Succeeded)
+                return Forbid(); // 403
+
+
+
+            var user = _IUnitOfWork.UserRepository.Get(u => u.Id == id, include: query => query.Include(u => u.Person));
+
+            if (user == null)
                 return NotFound($"No user found with ID {id}.");
 
-            var PhoneNumbers = _IUnitOfWork.PhoneNumberRepository.GetAll(p => p.PersonId == User.PersonId).Select(pn => pn.phone).ToList();
+            var PhoneNumbers = _IUnitOfWork.PhoneNumberRepository.GetAll(p => p.PersonId == user.PersonId).Select(pn => pn.phone).ToList();
 
-            return Ok(User.ToUserDetailsDto(PhoneNumbers));
+            return Ok(user.ToUserDetailsDto(PhoneNumbers));
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.Admin)]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult AddNewUser(CreateUserDto NewUserDto)
+        public async Task<IActionResult> AddNewUserAsync(CreateUserDto NewUserDto)
         {
             if(NewUserDto == null)
                 return BadRequest("User data is required.");
+
+          
 
             var Transaction = _IUnitOfWork.BeginTransaction();
 
@@ -101,7 +122,7 @@ namespace Library.API.Controllers
 
                 _IUnitOfWork.Save();
                 Transaction.Commit();
-                return CreatedAtRoute("GetDetailsUserById", new { id = NewPerson.User.Id }, NewUser.ToUserDetailsDto(PhoneNumbers.Select(ph=>ph.phone).ToList()));
+                return CreatedAtRoute("GetDetailsUserById", new { id = NewPerson.User!.Id }, NewUser.ToUserDetailsDto(PhoneNumbers.Select(ph=>ph.phone).ToList()));
             }
             catch (Exception ex) 
             {
@@ -111,11 +132,11 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateUser(int id,UpdateUserDto updateUserDto)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> UpdateUserAsync(int id,UpdateUserDto updateUserDto, [FromServices] IAuthorizationService authorizationService)
         {
             if(updateUserDto == null)
                 return BadRequest("User data is required.");
@@ -123,17 +144,25 @@ namespace Library.API.Controllers
             if (!_IUnitOfWork.UserRepository.IsExist(u => u.Id == id))
                 return NotFound($"No user found with ID {id}.");
 
+
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User,id, policyName: "ClientOwnerOrAdmin");
+
+            if (!authResult.Succeeded)
+                return Forbid(); // 403
+
+
             _IUnitOfWork.UserRepository.Update(updateUserDto, id);
             _IUnitOfWork.Save();
 
             return NoContent();
         }
         [HttpDelete("{id}")]
-        [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult DeleteUser(int id)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> DeleteUserAsync(int id, [FromServices] IAuthorizationService authorizationService)
         {
             if (id <= 0)
                 return BadRequest("Invalid user ID. ID must be a positive integer.");
@@ -141,6 +170,12 @@ namespace Library.API.Controllers
 
             if (UserToDelete is null)
                 return NotFound($"No user found with ID {id}.");
+
+            // Policy-based authorization check done here
+            var authResult = await authorizationService.AuthorizeAsync(user: User, id, policyName: "ClientOwnerOrAdmin");
+
+            if (!authResult.Succeeded)
+                return Forbid(); // 403
 
             _IUnitOfWork.UserRepository.Remove(UserToDelete);
             _IUnitOfWork.Save();
